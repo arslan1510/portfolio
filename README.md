@@ -4,7 +4,7 @@ A terminal-style portfolio website built with F# and Oxpecker.
 
 ## Live Demo
 
-🚀 **[Visit Portfolio](https://brilliant-miracle.up.railway.app)**
+**[Visit Portfolio](https://arslan1510.up.railway.app/)**
 
 ## Features
 
