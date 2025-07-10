@@ -21,10 +21,20 @@ let configureApp (app: WebApplication) =
 
 [<EntryPoint>]
 let main args =
-    WebApplication.CreateBuilder(args)
-    |> fun builder ->
-        builder.Services.AddOxpecker() |> ignore
-        builder.Build()
+    // Set Railway port configuration
+    let port =
+        System.Environment.GetEnvironmentVariable("PORT")
+        |> Option.ofObj
+        |> Option.defaultValue "8080"
+
+    System.Environment.SetEnvironmentVariable("ASPNETCORE_URLS", $"http://0.0.0.0:{port}")
+
+    let builder = WebApplication.CreateBuilder(args)
+    builder.Services.AddOxpecker() |> ignore
+
+    let app = builder.Build()
+
+    app
     |> configureApp
     |> fun app ->
         app.Run()
