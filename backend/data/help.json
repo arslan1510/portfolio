@@ -1,0 +1,13 @@
+{
+  "commands": {
+    "help": "Show this help message",
+    "about": "Display information about me", 
+    "github": "List all GitHub repositories",
+    "skills": "Display technical skills",
+    "contact": "Show contact information",
+    "clear": "Clear the terminal",
+    "whoami": "Display current user",
+    "pwd": "Print working directory",
+    "date": "Display current date and time"
+  }
+} 

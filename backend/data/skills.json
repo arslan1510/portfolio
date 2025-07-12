@@ -1,0 +1,66 @@
+{
+  "categories": {
+    "languages": {
+      "displayName": "Languages",
+      "skills": {
+        "Python": { "icon": "󰌠", "proficiency": "advanced" },
+        "F#": { "icon": "󰘧", "proficiency": "intermediate" },
+        "Haskell": { "icon": "󰲒", "proficiency": "intermediate" }
+      }
+    },
+    "frameworks": {
+      "displayName": "Frameworks & Libraries",
+      "skills": {
+        "Oxpecker": { "icon": "󱗆" },
+        ".NET": { "icon": "󰪮" },
+        "FastAPI": { "icon": "󰜚" },
+        "NumPy": { "icon": "󰘨" },
+        "Pandas": { "icon": "󰐗" },
+        "PyTorch": { "icon": "󰐦" }
+      }
+    },
+    "tools": {
+      "displayName": "Tools",
+      "skills": {
+        "Git": { "icon": "󰊢" },
+        "Fish": { "icon": "󰈺" }
+      }
+    },
+    "mathematics": {
+      "displayName": "Mathematics (Pure & Applied)",
+      "skills": {
+        "Category Theory": { "icon": "󰊕" },
+        "Analysis": { "icon": "∫" },
+        "Linear & Abstract Algebra": { "icon": "∇" },
+        "Statistics": { "icon": "󰄨" },
+        "Graph Theory": { "icon": "󱁉" },
+        "Combinatorics": { "icon": "󰐘" }
+      }
+    },
+    "databases": {
+      "displayName": "Databases",
+      "skills": {
+        "Neo4j": { "icon": "󰡄" },
+        "PostgreSQL": { "icon": "󰲸" }
+      }
+    },
+    "cloud": {
+      "displayName": "Cloud",
+      "skills": {
+          "AWS": { "icon": "󰸏" }
+      }
+    },
+    "devops": {
+      "displayName": "DevOps",
+      "skills": {
+          "Docker": { "icon": "󰡨" }
+      }
+    },
+    "os": {
+      "displayName": "Operating Systems",
+      "skills": {
+        "Linux": { "icon": "󰣇" }
+      }
+    }
+  }
+} 
