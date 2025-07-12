@@ -1,35 +1,35 @@
 /* Terminal Style CSS - Gruvbox Dark Theme */
 
 :root {
-    /* Gruvbox Dark Colors */
-    --gruvbox-bg0-hard: #1d2021;
+    /* Official Gruvbox Dark Colors */
+    --gruvbox-bg0-hard: #1D2021;
     --gruvbox-bg0: #282828;
-    --gruvbox-bg0-soft: #32302f;
-    --gruvbox-bg1: #3c3836;
+    --gruvbox-bg0-soft: #32302F;
+    --gruvbox-bg1: #3C3836;
     --gruvbox-bg2: #504945;
-    --gruvbox-bg3: #665c54;
-    --gruvbox-bg4: #7c6f64;
+    --gruvbox-bg3: #665C54;
+    --gruvbox-bg4: #7C6F64;
     
-    --gruvbox-fg0: #fbf1c7;
-    --gruvbox-fg1: #ebdbb2;
-    --gruvbox-fg2: #d5c4a1;
-    --gruvbox-fg3: #bdae93;
-    --gruvbox-fg4: #a89984;
+    --gruvbox-fg0: #FBF1C7;
+    --gruvbox-fg1: #EBDBB2;
+    --gruvbox-fg2: #D5C4A1;
+    --gruvbox-fg3: #BDAE93;
+    --gruvbox-fg4: #A89984;
     
-    --gruvbox-red: #cc241d;
-    --gruvbox-red-bright: #fb4934;
-    --gruvbox-green: #98971a;
-    --gruvbox-green-bright: #b8bb26;
-    --gruvbox-yellow: #d79921;
-    --gruvbox-yellow-bright: #fabd2f;
+    --gruvbox-red: #CC241D;
+    --gruvbox-red-bright: #FB4934;
+    --gruvbox-green: #98971A;
+    --gruvbox-green-bright: #B8BB26;
+    --gruvbox-yellow: #D79921;
+    --gruvbox-yellow-bright: #FABD2F;
     --gruvbox-blue: #458588;
-    --gruvbox-blue-bright: #83a598;
-    --gruvbox-purple: #b16286;
-    --gruvbox-purple-bright: #d3869b;
-    --gruvbox-aqua: #689d6a;
-    --gruvbox-aqua-bright: #8ec07c;
-    --gruvbox-orange: #d65d0e;
-    --gruvbox-orange-bright: #fe8019;
+    --gruvbox-blue-bright: #83A598;
+    --gruvbox-purple: #B16286;
+    --gruvbox-purple-bright: #D3869B;
+    --gruvbox-aqua: #689D6A;
+    --gruvbox-aqua-bright: #8EC07C;
+    --gruvbox-orange: #D65D0E;
+    --gruvbox-orange-bright: #FE8019;
     --gruvbox-gray: #928374;
     
     /* Terminal Color Mappings */
@@ -77,7 +77,7 @@ body {
     height: 100vh;
     position: relative;
     font-size: 14px;
-    line-height: 1.4;
+    line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
@@ -87,21 +87,91 @@ body {
     width: 100%;
     height: 100vh;
     position: relative;
-    background: var(--term-bg);
+    background: var(--gruvbox-bg0-hard);
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Terminal Window */
+.terminal-window {
+    width: 95%;
+    height: 90%;
+    background: var(--gruvbox-bg0);
+    border-radius: 4px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--gruvbox-yellow);
+}
+
+/* Terminal Title Bar */
+.terminal-title-bar {
+    height: 32px;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    padding: 0 0.5rem;
+}
+
+/* Terminal Buttons */
+.terminal-buttons {
+    display: flex;
+    gap: 0.3rem;
+    margin-left: auto;
+    order: 2;
+}
+
+.terminal-button {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+    background: transparent;
+}
+
+.terminal-button.minimize::after {
+    content: "−";
+}
+
+.terminal-button.maximize::after {
+    content: "□";
+}
+
+.terminal-button.close::after {
+    content: "×";
+}
+
+.terminal-button:hover {
+    opacity: 0.8;
+}
+
+/* Terminal Title */
+.terminal-title {
+    flex: 1;
+    text-align: center;
+    color: white;
+    font-size: 13px;
+    font-weight: 500;
 }
 
 /* Terminal Screen */
 .terminal-screen {
-    width: 100%;
-    height: 100%;
+    flex: 1;
     background: var(--gruvbox-bg0);
     position: relative;
     padding: 1.5rem;
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
 }
 
 
@@ -121,7 +191,8 @@ body {
 
 /* Terminal Welcome Section - Enhanced */
 .terminal-welcome {
-    margin-bottom: 0.5rem;
+    margin-bottom: 1rem;
+    margin-top: 0;
     flex-shrink: 0;
     width: 100%;
     text-align: center;
@@ -139,7 +210,7 @@ body {
     width: 100%;
 }
 
-/* Terminal Output - Enhanced scrollbar */
+/* Terminal Output - No scrollbar */
 .terminal-output {
     margin-bottom: 0.5rem;
     max-height: calc(100vh - 450px);
@@ -148,36 +219,14 @@ body {
     flex-grow: 1;
     /* Instant scrolling like real terminal */
     scroll-behavior: auto;
-    /* Custom scrollbar for webkit browsers */
-    scrollbar-width: thin;
-    scrollbar-color: var(--gruvbox-bg3) var(--gruvbox-bg1);
+    /* Hide scrollbar */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 }
 
-/* Custom scrollbar styling */
+/* Hide scrollbar for webkit browsers */
 .terminal-output::-webkit-scrollbar {
-    width: 8px;
-    display: block !important;
-}
-
-.terminal-output::-webkit-scrollbar-track {
-    background: var(--gruvbox-bg1);
-    border-radius: 4px;
-}
-
-.terminal-output::-webkit-scrollbar-thumb {
-    background: var(--gruvbox-bg3);
-    border-radius: 4px;
-    transition: background 0.2s ease;
-}
-
-.terminal-output::-webkit-scrollbar-thumb:hover {
-    background: var(--gruvbox-bg4);
-}
-
-/* Firefox scrollbar */
-.terminal-output {
-    scrollbar-width: thin;
-    scrollbar-color: var(--gruvbox-bg3) var(--gruvbox-bg1);
+    display: none;
 }
 
 /* Terminal line enhancements */
@@ -187,18 +236,6 @@ body {
     display: block;
     margin-bottom: 0.5rem;
     position: relative;
-    animation: typeIn 0.1s ease-out;
-}
-
-@keyframes typeIn {
-    from {
-        opacity: 0;
-        transform: translateX(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
 }
 
 .terminal-line.output {
@@ -225,27 +262,25 @@ body {
 
 /* Enhanced command styling */
 .terminal-line.command {
-    color: var(--gruvbox-green-bright);
-    background: linear-gradient(to right, rgba(184, 187, 38, 0.15), rgba(184, 187, 38, 0.05), transparent);
-    border-left: 3px solid var(--gruvbox-green-bright);
+    color: var(--gruvbox-blue-bright);
+    background: linear-gradient(to right, rgba(131, 165, 152, 0.15), rgba(131, 165, 152, 0.05), transparent);
+    border-left: 3px solid var(--gruvbox-blue-bright);
     padding: 0.25rem 0.5rem;
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: background 0.1s ease;
     position: relative;
 }
 
 .terminal-line.command::before {
     content: "$ ";
-    color: var(--gruvbox-aqua-bright);
+    color: var(--gruvbox-blue-bright);
     font-weight: bold;
 }
 
 .terminal-line.command:hover {
-    background: linear-gradient(to right, rgba(184, 187, 38, 0.25), rgba(184, 187, 38, 0.1), transparent) !important;
-    border-left-width: 5px;
-    padding-left: calc(0.5rem - 2px);
+    background: linear-gradient(to right, rgba(131, 165, 152, 0.25), rgba(131, 165, 152, 0.1), transparent) !important;
 }
 
 /* Enhanced error styling */
@@ -257,20 +292,18 @@ body {
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: background 0.1s ease;
     position: relative;
 }
 
 .terminal-line.error::before {
-    content: "✗ ";
+    content: "× ";
     color: var(--gruvbox-red);
     font-weight: bold;
 }
 
 .terminal-line.error:hover {
     background: linear-gradient(to right, rgba(251, 73, 52, 0.25), rgba(251, 73, 52, 0.1), transparent) !important;
-    border-left-width: 5px;
-    padding-left: calc(0.5rem - 2px);
 }
 
 /* Add spacing for command blocks */
@@ -279,10 +312,7 @@ body {
     padding-left: 1.5rem;
 }
 
-/* Add padding to command response sections */
-.terminal-output .command-output {
-    padding: 0 1.5rem;
-}
+
 
 /* Command Prompt - Enhanced */
 .terminal-prompt {
@@ -377,7 +407,7 @@ body {
 
 /* ASCII Art */
 .ascii-art {
-    color: var(--gruvbox-green-bright);
+    color: var(--gruvbox-yellow-bright);
     font-size: 11px;
     margin: 1rem 0;
     white-space: pre;
@@ -392,16 +422,41 @@ body {
 
 /* General Command Output Styling */
 .command-output {
-    margin: 0.5rem 0;
-    border-left: 2px solid var(--gruvbox-bg2);
-    padding-left: 1rem;
+    margin: 1.5rem 0;
+    border-left: 1px solid var(--gruvbox-yellow);
+    padding: 0.8rem;
+    background: var(--gruvbox-bg0);
+    cursor: pointer;
+    transition: border-color 0.1s ease-in-out;
+}
+
+.command-output:hover {
+    border-color: var(--gruvbox-yellow-bright);
+}
+
+/* Command Success Box */
+.command-output.success {
+    border-color: var(--gruvbox-blue-bright);
+}
+
+.command-output.success:hover {
+    border-color: var(--gruvbox-blue-bright);
+}
+
+/* Command Error Box */
+.command-output.error {
+    border-color: var(--gruvbox-red-bright);
+}
+
+.command-output.error:hover {
+    border-color: var(--gruvbox-red-bright);
 }
 
 .output-content {
     font-family: inherit;
     white-space: pre-wrap;
     margin: 0;
-    color: var(--gruvbox-fg1);
+    color: var(--gruvbox-fg0);
 }
 
 /* Contact section styling */
@@ -412,19 +467,15 @@ body {
 
 /* Contact items - shared styles */
 .contact-section > div {
-    margin: 0.25rem 0;
+    margin: 0;
     cursor: pointer;
-    transition: all 0.2s ease;
-    padding: 0.25rem 0.5rem;
+    padding: 0;
     position: relative;
+    transition: opacity 0.1s ease;
 }
 
-
-
 .contact-section > div:hover {
-    background: linear-gradient(to right, rgba(131, 165, 152, 0.2), rgba(131, 165, 152, 0.05), transparent);
-    border-left: 4px solid rgba(131, 165, 152, 0.4);
-    transform: translateX(5px);
+    opacity: 0.8;
 }
 
 
@@ -473,22 +524,18 @@ body {
 }
 
 .project-card {
-    margin: 0.25rem 0;
+    margin: 0;
     display: block;
     text-align: left;
     line-height: 1.2;
     cursor: pointer;
-    transition: all 0.2s ease;
-    padding: 0.25rem 0.5rem;
+    padding: 0;
     position: relative;
+    transition: opacity 0.1s ease;
 }
 
-
-
 .project-card:hover {
-    background: linear-gradient(to right, rgba(131, 165, 152, 0.2), rgba(131, 165, 152, 0.05), transparent);
-    border-left: 4px solid rgba(131, 165, 152, 0.4);
-    transform: translateX(5px);
+    opacity: 0.8;
 }
 
 
@@ -563,26 +610,34 @@ body {
 }
 
 .skill-category {
-    margin: 0.25rem 0;
+    margin: 0;
     display: block;
     text-align: left;
-    white-space: nowrap;
-    line-height: 1.2;
-    padding: 0.25rem 0;
+    padding: 0;
 }
 
-.skill-name {
-    display: inline;
-    min-width: 150px;
-    color: var(--gruvbox-yellow-bright);
-    font-weight: bold;
-    margin-right: 0.5rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+.skill-badges {
+    display: inline-block;
+    line-height: 0;
 }
 
+.skill-badge {
+    display: inline-block;
+    height: 28px;
+    margin: 2px 4px;
+    vertical-align: middle;
+    transition: transform 0.2s ease, filter 0.2s ease;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
 
+.skill-badge:hover {
+    transform: scale(1.05);
+    filter: brightness(1.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
 
+/* Remove old skill tag styles */
 .skill-values {
     display: inline;
     color: var(--gruvbox-fg0);
@@ -591,6 +646,14 @@ body {
 /* Skill Tag Styling */
 .skill-tag {
     margin-right: 0.3rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.skill-tag svg {
+    flex-shrink: 0;
+    vertical-align: middle;
 }
 
 /* Skill Tag Colors by Category */
