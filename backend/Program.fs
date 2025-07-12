@@ -33,7 +33,12 @@ let configureApp (app: WebApplication) =
         [ GET
               [ route "/" Handlers.terminalHandler
                 route "/api/terminal/time" Handlers.terminalTimeHandler ]
-          POST [ route "/api/terminal/command" Handlers.terminalCommandHandler ] ]
+          POST
+              [ route "/api/terminal/command" Handlers.terminalCommandHandler
+                route "/api/terminal/minimize" Handlers.terminalMinimizeHandler
+                route "/api/terminal/maximize" Handlers.terminalMaximizeHandler
+                route "/api/terminal/restore" Handlers.terminalRestoreHandler
+                route "/api/terminal/close" Handlers.terminalCloseHandler ] ]
     )
     |> ignore
 

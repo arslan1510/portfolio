@@ -71,13 +71,36 @@ let terminalContent =
     }
 
 let terminalComponent =
-    div (class' = "terminal-container") {
-        div (class' = "terminal-window") {
+    div (id = "terminal-container", class' = "terminal-container") {
+        div (id = "terminal-window", class' = "terminal-window") {
             div (class' = "terminal-title-bar") {
                 div (class' = "terminal-buttons") {
-                    div (class' = "terminal-button minimize") { "" }
-                    div (class' = "terminal-button maximize") { "" }
-                    div (class' = "terminal-button close") { "" }
+                    div (
+                        class' = "terminal-button minimize",
+                        hxPost = "/api/terminal/minimize",
+                        hxTarget = "#terminal-window",
+                        hxSwap = "outerHTML"
+                    ) {
+                        ""
+                    }
+
+                    div (
+                        class' = "terminal-button maximize",
+                        hxPost = "/api/terminal/maximize",
+                        hxTarget = "#terminal-window",
+                        hxSwap = "outerHTML"
+                    ) {
+                        ""
+                    }
+
+                    div (
+                        class' = "terminal-button close",
+                        hxPost = "/api/terminal/close",
+                        hxTarget = "#terminal-container",
+                        hxSwap = "innerHTML"
+                    ) {
+                        ""
+                    }
                 }
 
                 div (class' = "terminal-title") { "guest@portfolio:~" }
@@ -86,6 +109,121 @@ let terminalComponent =
             div (class' = "terminal-screen") { terminalContent }
         }
     }
+
+
+let minimizedTerminal =
+    div (id = "terminal-window", class' = "terminal-window", style = "height: 40px; width: 300px;") {
+        div (class' = "terminal-title-bar") {
+            div (class' = "terminal-buttons") {
+                div (
+                    class' = "terminal-button minimize",
+                    hxPost = "/api/terminal/restore",
+                    hxTarget = "#terminal-window",
+                    hxSwap = "outerHTML"
+                ) {
+                    ""
+                }
+
+                div (
+                    class' = "terminal-button maximize",
+                    hxPost = "/api/terminal/maximize",
+                    hxTarget = "#terminal-window",
+                    hxSwap = "outerHTML"
+                ) {
+                    ""
+                }
+
+                div (
+                    class' = "terminal-button close",
+                    hxPost = "/api/terminal/close",
+                    hxTarget = "#terminal-container",
+                    hxSwap = "innerHTML"
+                ) {
+                    ""
+                }
+            }
+
+            div (class' = "terminal-title") { "guest@portfolio:~" }
+        }
+    }
+
+let maximizedTerminal =
+    div (id = "terminal-window", class' = "terminal-window", style = "width: 100%; height: 100%; border-radius: 0;") {
+        div (class' = "terminal-title-bar") {
+            div (class' = "terminal-buttons") {
+                div (
+                    class' = "terminal-button minimize",
+                    hxPost = "/api/terminal/minimize",
+                    hxTarget = "#terminal-window",
+                    hxSwap = "outerHTML"
+                ) {
+                    ""
+                }
+
+                div (
+                    class' = "terminal-button maximize",
+                    hxPost = "/api/terminal/restore",
+                    hxTarget = "#terminal-window",
+                    hxSwap = "outerHTML"
+                ) {
+                    ""
+                }
+
+                div (
+                    class' = "terminal-button close",
+                    hxPost = "/api/terminal/close",
+                    hxTarget = "#terminal-container",
+                    hxSwap = "innerHTML"
+                ) {
+                    ""
+                }
+            }
+
+            div (class' = "terminal-title") { "guest@portfolio:~" }
+        }
+
+        div (class' = "terminal-screen") { terminalContent }
+    }
+
+let normalTerminal =
+    div (id = "terminal-window", class' = "terminal-window") {
+        div (class' = "terminal-title-bar") {
+            div (class' = "terminal-buttons") {
+                div (
+                    class' = "terminal-button minimize",
+                    hxPost = "/api/terminal/minimize",
+                    hxTarget = "#terminal-window",
+                    hxSwap = "outerHTML"
+                ) {
+                    ""
+                }
+
+                div (
+                    class' = "terminal-button maximize",
+                    hxPost = "/api/terminal/maximize",
+                    hxTarget = "#terminal-window",
+                    hxSwap = "outerHTML"
+                ) {
+                    ""
+                }
+
+                div (
+                    class' = "terminal-button close",
+                    hxPost = "/api/terminal/close",
+                    hxTarget = "#terminal-container",
+                    hxSwap = "innerHTML"
+                ) {
+                    ""
+                }
+            }
+
+            div (class' = "terminal-title") { "guest@portfolio:~" }
+        }
+
+        div (class' = "terminal-screen") { terminalContent }
+    }
+
+let closedTerminal = div () { "" }
 
 let terminalPage =
     html (lang = "en") {

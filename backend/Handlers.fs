@@ -79,3 +79,15 @@ let terminalTimeHandler: EndpointHandler =
             let timeString = System.DateTime.Now.ToString("HH:mm:ss")
             return! ctx.WriteText timeString
         }
+
+let terminalMinimizeHandler: EndpointHandler =
+    fun (ctx: HttpContext) -> task { return! ctx.WriteHtmlView TerminalView.minimizedTerminal }
+
+let terminalMaximizeHandler: EndpointHandler =
+    fun (ctx: HttpContext) -> task { return! ctx.WriteHtmlView TerminalView.maximizedTerminal }
+
+let terminalRestoreHandler: EndpointHandler =
+    fun (ctx: HttpContext) -> task { return! ctx.WriteHtmlView TerminalView.normalTerminal }
+
+let terminalCloseHandler: EndpointHandler =
+    fun (ctx: HttpContext) -> task { return! ctx.WriteHtmlView TerminalView.closedTerminal }
