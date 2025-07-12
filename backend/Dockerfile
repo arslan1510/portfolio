@@ -5,11 +5,11 @@ FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /app
 
 # Copy project file and restore dependencies
-COPY project.fsproj ./
+COPY backend/project.fsproj ./
 RUN dotnet restore project.fsproj
 
 # Copy source code
-COPY . ./
+COPY backend/ ./
 
 # Build the application
 RUN dotnet build project.fsproj -c Release -o /app/build
