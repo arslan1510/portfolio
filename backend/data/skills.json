@@ -1,66 +1,201 @@
 {
-  "categories": {
-    "languages": {
-      "displayName": "Languages",
-      "skills": {
-        "Python": { "icon": "󰌠", "proficiency": "advanced" },
-        "F#": { "icon": "󰘧", "proficiency": "intermediate" },
-        "Haskell": { "icon": "󰲒", "proficiency": "intermediate" }
+  "categories": [
+    {
+      "key": "mathematics",
+      "category": {
+        "displayName": "Mathematics (Pure & Applied)",
+        "skills": [
+          {
+            "name": "Category Theory",
+            "info": {
+              "badgeUrl": "https://img.shields.io/badge/Category%20Theory-fb4934?style=for-the-badge&logo=mathworks&logoColor=fff"
+            }
+          },
+          {
+            "name": "Analysis",
+            "info": {
+              "badgeUrl": "https://img.shields.io/badge/Analysis-83a598?style=for-the-badge&logo=mathworks&logoColor=fff"
+            }
+          },
+          {
+            "name": "Linear & Abstract Algebra",
+            "info": {
+              "badgeUrl": "https://img.shields.io/badge/Linear%20%26%20Abstract%20Algebra-8ec07c?style=for-the-badge&logo=mathworks&logoColor=fff"
+            }
+          },
+          {
+            "name": "Statistics",
+            "info": {
+              "badgeUrl": "https://img.shields.io/badge/Statistics-d79921?style=for-the-badge&logo=mathworks&logoColor=fff"
+            }
+          },
+          {
+            "name": "Graph Theory",
+            "info": {
+              "badgeUrl": "https://img.shields.io/badge/Graph%20Theory-d3869b?style=for-the-badge&logo=mathworks&logoColor=fff"
+            }
+          },
+          {
+            "name": "Combinatorics",
+            "info": {
+              "badgeUrl": "https://img.shields.io/badge/Combinatorics-fe8019?style=for-the-badge&logo=mathworks&logoColor=fff"
+            }
+          }
+        ]
       }
     },
-    "frameworks": {
-      "displayName": "Frameworks & Libraries",
-      "skills": {
-        "Oxpecker": { "icon": "󱗆" },
-        ".NET": { "icon": "󰪮" },
-        "FastAPI": { "icon": "󰜚" },
-        "NumPy": { "icon": "󰘨" },
-        "Pandas": { "icon": "󰐗" },
-        "PyTorch": { "icon": "󰐦" }
+    {
+      "key": "languages",
+      "category": {
+        "displayName": "Languages",
+        "skills": [
+          {
+            "name": "Python",
+            "info": {
+              "badgeUrl": "https://img.shields.io/badge/Python-d79921?style=for-the-badge&logo=python&logoColor=fff"
+            }
+          },
+          {
+            "name": "F#",
+            "info": {
+              "badgeUrl": "https://img.shields.io/badge/F%23-83a598?style=for-the-badge&logo=fsharp&logoColor=fff"
+            }
+          },
+          {
+            "name": "Haskell",
+            "info": {
+              "badgeUrl": "https://img.shields.io/badge/Haskell-d3869b?style=for-the-badge&logo=haskell&logoColor=fff"
+            }
+          }
+        ]
       }
     },
-    "tools": {
-      "displayName": "Tools",
-      "skills": {
-        "Git": { "icon": "󰊢" },
-        "Fish": { "icon": "󰈺" }
+    {
+      "key": "frameworks",
+      "category": {
+        "displayName": "Frameworks & Libraries",
+        "skills": [
+          {
+            "name": "Oxpecker",
+            "info": {
+              "badgeUrl": "https://img.shields.io/badge/Oxpecker-fb4934?style=for-the-badge&logo=dotnet&logoColor=fff"
+            }
+          },
+          {
+            "name": ".NET",
+            "info": {
+              "badgeUrl": "https://img.shields.io/badge/.NET-8ec07c?style=for-the-badge&logo=dotnet&logoColor=fff"
+            }
+          },
+          {
+            "name": "FastAPI",
+            "info": {
+              "badgeUrl": "https://img.shields.io/badge/FastAPI-fe8019?style=for-the-badge&logo=fastapi&logoColor=fff"
+            }
+          },
+          {
+            "name": "NumPy",
+            "info": {
+              "badgeUrl": "https://img.shields.io/badge/NumPy-83a598?style=for-the-badge&logo=numpy&logoColor=fff"
+            }
+          },
+          {
+            "name": "Pandas",
+            "info": {
+              "badgeUrl": "https://img.shields.io/badge/Pandas-d79921?style=for-the-badge&logo=pandas&logoColor=fff"
+            }
+          },
+          {
+            "name": "PyTorch",
+            "info": {
+              "badgeUrl": "https://img.shields.io/badge/PyTorch-d3869b?style=for-the-badge&logo=pytorch&logoColor=fff"
+            }
+          }
+        ]
       }
     },
-    "mathematics": {
-      "displayName": "Mathematics (Pure & Applied)",
-      "skills": {
-        "Category Theory": { "icon": "󰊕" },
-        "Analysis": { "icon": "∫" },
-        "Linear & Abstract Algebra": { "icon": "∇" },
-        "Statistics": { "icon": "󰄨" },
-        "Graph Theory": { "icon": "󱁉" },
-        "Combinatorics": { "icon": "󰐘" }
+    {
+      "key": "tools",
+      "category": {
+        "displayName": "Tools",
+        "skills": [
+          {
+            "name": "Git",
+            "info": {
+              "badgeUrl": "https://img.shields.io/badge/Git-fb4934?style=for-the-badge&logo=git&logoColor=fff"
+            }
+          },
+          {
+            "name": "Fish",
+            "info": {
+              "badgeUrl": "https://img.shields.io/badge/Fish-8ec07c?style=for-the-badge&logo=fishshell&logoColor=fff"
+            }
+          }
+        ]
       }
     },
-    "databases": {
-      "displayName": "Databases",
-      "skills": {
-        "Neo4j": { "icon": "󰡄" },
-        "PostgreSQL": { "icon": "󰲸" }
+    
+    {
+      "key": "databases",
+      "category": {
+        "displayName": "Databases",
+        "skills": [
+          {
+            "name": "Neo4j",
+            "info": {
+              "badgeUrl": "https://img.shields.io/badge/Neo4j-83a598?style=for-the-badge&logo=neo4j&logoColor=fff"
+            }
+          },
+          {
+            "name": "PostgreSQL",
+            "info": {
+              "badgeUrl": "https://img.shields.io/badge/PostgreSQL-d79921?style=for-the-badge&logo=postgresql&logoColor=fff"
+            }
+          }
+        ]
       }
     },
-    "cloud": {
-      "displayName": "Cloud",
-      "skills": {
-          "AWS": { "icon": "󰸏" }
+    {
+      "key": "cloud",
+      "category": {
+        "displayName": "Cloud",
+        "skills": [
+          {
+            "name": "AWS",
+            "info": {
+              "badgeUrl": "https://img.shields.io/badge/AWS-fe8019?style=for-the-badge&logo=amazonaws&logoColor=fff"
+            }
+          }
+        ]
       }
     },
-    "devops": {
-      "displayName": "DevOps",
-      "skills": {
-          "Docker": { "icon": "󰡨" }
+    {
+      "key": "devops",
+      "category": {
+        "displayName": "DevOps",
+        "skills": [
+          {
+            "name": "Docker",
+            "info": {
+              "badgeUrl": "https://img.shields.io/badge/Docker-d3869b?style=for-the-badge&logo=docker&logoColor=fff"
+            }
+          }
+        ]
       }
     },
-    "os": {
-      "displayName": "Operating Systems",
-      "skills": {
-        "Linux": { "icon": "󰣇" }
+    {
+      "key": "os",
+      "category": {
+        "displayName": "Operating Systems",
+        "skills": [
+          {
+            "name": "Linux",
+            "info": {
+              "badgeUrl": "https://img.shields.io/badge/Linux-8ec07c?style=for-the-badge&logo=linux&logoColor=fff"
+            }
+          }
+        ]
       }
     }
-  }
+  ]
 } 

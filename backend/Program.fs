@@ -4,19 +4,20 @@ open Microsoft.Extensions.FileProviders
 open System.IO
 open Oxpecker
 
+let getFrontendPath () =
+    let devPath = Path.Combine(Directory.GetCurrentDirectory(), "..", "frontend")
+    let containerPath = Path.Combine(Directory.GetCurrentDirectory(), "frontend")
+
+    if Directory.Exists(containerPath) then
+        containerPath
+    else
+        devPath
+
 let configureApp (app: WebApplication) =
     if app.Environment.IsDevelopment() then
         app.UseDeveloperExceptionPage() |> ignore
 
-    // Configure static files to serve from frontend directory
-    let frontendPath =
-        let devPath = Path.Combine(Directory.GetCurrentDirectory(), "..", "frontend")
-        let containerPath = Path.Combine(Directory.GetCurrentDirectory(), "frontend")
-
-        if Directory.Exists(containerPath) then
-            containerPath
-        else
-            devPath
+    let frontendPath = getFrontendPath ()
 
     app.UseStaticFiles(
         Microsoft.AspNetCore.Builder.StaticFileOptions(
@@ -40,7 +41,6 @@ let configureApp (app: WebApplication) =
 
 [<EntryPoint>]
 let main args =
-    // Set Railway port configuration
     let port =
         System.Environment.GetEnvironmentVariable("PORT")
         |> Option.ofObj
@@ -49,19 +49,7 @@ let main args =
     System.Environment.SetEnvironmentVariable("ASPNETCORE_URLS", $"http://0.0.0.0:{port}")
 
     let builder = WebApplication.CreateBuilder(args)
-
-    // Configure web root to frontend directory
-    let frontendPath =
-        let devPath = Path.Combine(Directory.GetCurrentDirectory(), "..", "frontend")
-        let containerPath = Path.Combine(Directory.GetCurrentDirectory(), "frontend")
-
-        if Directory.Exists(containerPath) then
-            containerPath
-        else
-            devPath
-
-    builder.Environment.WebRootPath <- frontendPath
-
+    builder.Environment.WebRootPath <- getFrontendPath ()
     builder.Services.AddOxpecker() |> ignore
 
     let app = builder.Build()

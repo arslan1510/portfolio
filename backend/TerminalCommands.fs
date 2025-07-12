@@ -5,9 +5,6 @@ open Models
 open GitHubService
 open DataLoader
 
-
-
-
 let executeCommand (command: string) (args: string[]) =
     task {
         match command.ToLower() with
@@ -15,12 +12,11 @@ let executeCommand (command: string) (args: string[]) =
         | "about" -> return Ok(loadAboutText ())
         | "github" ->
             let! result = fetchPublicRepos "arslan1510"
+
             match result with
-            | Ok projects ->
-                return Ok(System.Text.Json.JsonSerializer.Serialize(projects))
-            | Error error ->
-                return Error error
-        | "skills" -> 
+            | Ok projects -> return Ok(System.Text.Json.JsonSerializer.Serialize(projects))
+            | Error error -> return Error error
+        | "skills" ->
             try
                 let skills = loadSkills ()
                 return Ok(System.Text.Json.JsonSerializer.Serialize(skills))

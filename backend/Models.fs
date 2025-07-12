@@ -30,18 +30,26 @@ type ContactData =
       github: string
       linkedin: string }
 
-type SkillInfo = 
-    { icon: string
-      proficiency: string option }
+type AboutData =
+    { header: string
+      expertise: string[]
+      interests: string[]
+      current: string
+      footer: string }
 
-type SkillCategory = 
+type SkillInfo = { badgeUrl: string }
+
+type SkillItem = { name: string; info: SkillInfo }
+
+type SkillCategory =
     { displayName: string
-      skills: Map<string, SkillInfo> }
+      skills: SkillItem[] }
 
-type SkillsData = 
-    { categories: Map<string, SkillCategory> }
+type CategoryItem =
+    { key: string; category: SkillCategory }
+
+type SkillsData = { categories: CategoryItem[] }
 
 type TextData = { text: string }
 
 type HelpData = { commands: Map<string, string> }
-

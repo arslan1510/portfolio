@@ -5,7 +5,6 @@ open System.Text.Json
 open System.Collections.Generic
 open Models
 
-
 let private readJsonFile<'T> (filePath: string) : 'T =
     let json = File.ReadAllText(filePath)
 
@@ -33,6 +32,9 @@ let private memoize (fn: 'a -> 'b) =
 let private loadTextDataMemoized =
     memoize (fun filePath -> readJsonFile<TextData> filePath)
 
+let private loadAboutDataMemoized =
+    memoize (fun filePath -> readJsonFile<AboutData> filePath)
+
 let private loadHelpDataMemoized =
     memoize (fun filePath -> readJsonFile<HelpData> filePath)
 
@@ -44,29 +46,22 @@ let private loadSkillsDataMemoized =
 
 let loadHelpText () =
     let helpData = loadHelpDataMemoized "data/help.json"
-    let commands = helpData.commands
 
     let commandList =
-        commands
+        helpData.commands
         |> Map.toList
         |> List.map (fun (cmd, desc) -> sprintf "  %-17s %s" cmd desc)
         |> String.concat "\n"
 
-    sprintf "\nAvailable commands:\n\n%s\n" commandList
+    sprintf "\n%s\n" commandList
 
 let loadAboutText () =
-    let data = loadTextDataMemoized "data/about.json"
-    sprintf "\n%s\n" data.text
+    let data = loadAboutDataMemoized "data/about.json"
+    System.Text.Json.JsonSerializer.Serialize(data)
 
 let loadContactInfo () =
     let contactData = loadContactDataMemoized "data/contact.json"
-
-    sprintf
-        "Email:    %s\n  GitHub:   %s\n  LinkedIn: %s\n"
-        contactData.email
-        contactData.github
-        contactData.linkedin
+    sprintf "Email:    %s\n  GitHub:   %s\n  LinkedIn: %s\n" contactData.email contactData.github contactData.linkedin
 
 let loadSkills () =
-    let skillsData = loadSkillsDataMemoized "data/skills.json"
-    skillsData
+    loadSkillsDataMemoized "data/skills.json"

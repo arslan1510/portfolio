@@ -5,8 +5,6 @@ open System.Text.Json
 open System.Threading.Tasks
 open Models
 
-
-
 let private httpClient =
     let client = new HttpClient()
     client.DefaultRequestHeaders.Add("User-Agent", "F#-Portfolio-App")
@@ -28,36 +26,34 @@ let private fetchRepoLanguages (username: string) (repoName: string) : Task<stri
         try
             let url = $"https://api.github.com/repos/{username}/{repoName}/languages"
             let! response = httpClient.GetAsync(url)
-            
+
             if response.IsSuccessStatusCode then
                 let! json = response.Content.ReadAsStringAsync()
                 let languageDict = JsonSerializer.Deserialize<Map<string, int>>(json)
+
                 match languageDict with
                 | null -> return [||]
                 | dict -> return dict |> Map.keys |> Array.ofSeq
             else
                 return [||]
-        with
-        | _ -> return [||]
+        with _ ->
+            return [||]
     }
 
 let private convertToProject (username: string) (repo: GitHubRepo) : Task<Project> =
     task {
         let! languages = fetchRepoLanguages username repo.name
-        let allTechnologies = 
-            Array.concat [
-                languages
-                repo.topics
-            ]
+
+        let allTechnologies =
+            Array.concat [ languages; repo.topics ]
             |> Array.distinct
             |> Array.filter (fun tech -> not (System.String.IsNullOrWhiteSpace(tech)))
-        
-        return {
-            Title = repo.name
-            Description = repo.description |> Option.defaultValue "No description available"
-            Technologies = allTechnologies
-            GitHubUrl = repo.html_url
-        }
+
+        return
+            { Title = repo.name
+              Description = repo.description |> Option.defaultValue "No description available"
+              Technologies = allTechnologies
+              GitHubUrl = repo.html_url }
     }
 
 let private filterAndSortRepos (repos: GitHubRepo[]) : GitHubRepo[] =
@@ -99,9 +95,6 @@ let fetchPublicRepos (username: string) : Task<Result<Project[], string>> =
             | Error error -> return Error error
             | Ok repos ->
                 let filteredRepos = filterAndSortRepos repos
-                let! projects = 
-                    filteredRepos 
-                    |> Array.map (convertToProject username)
-                    |> Task.WhenAll
+                let! projects = filteredRepos |> Array.map (convertToProject username) |> Task.WhenAll
                 return Ok projects
     }
