@@ -26,6 +26,9 @@ WORKDIR /app
 # Copy published application
 COPY --from=build /app/publish .
 
+# Copy frontend files for static serving
+COPY frontend/ ./frontend/
+
 # Expose port
 EXPOSE 8080
 
