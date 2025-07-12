@@ -53,54 +53,33 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    /* Hide scrollbar globally */
+}
+
+/* Hide scrollbars globally */
+*, html, body {
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; /* Internet Explorer 10+ */
 }
 
-/* Hide scrollbar for WebKit browsers on all elements */
-*::-webkit-scrollbar {
-    width: 0px;
-    height: 0px;
-    background: transparent;
+*::-webkit-scrollbar,
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
     display: none;
 }
 
-html {
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* Internet Explorer 10+ */
-}
 
-html::-webkit-scrollbar {
-    width: 0px;
-    height: 0px;
-    background: transparent;
-    display: none;
-}
-
-/* Import Nerd Font Web Fonts - Multiple CDN options for reliability */
-@import url('https://cdn.jsdelivr.net/gh/mshaugh/nerdfont-webfonts@v3.3.0/build/firacode-nerd-font.css');
-@import url('https://cdn.jsdelivr.net/gh/mshaugh/nerdfont-webfonts@v3.3.0/build/jetbrainsmono-nerd-font.css');
-@import url('https://cdn.jsdelivr.net/gh/JayXon/powerline-web-fonts@master/DroidSansMonoNerdFont.css');
 
 body {
-    font-family: 'JetBrainsMono Nerd Font', 'FiraCode Nerd Font', 'DroidSansMono Nerd Font', 'CaskaydiaCove Nerd Font', 'Cascadia Code PL', 'JetBrains Mono', 'Cascadia Code', 'Cascadia Mono', 'Courier New', 'Consolas', 'Monaco', monospace;
+    font-family: 'Cascadia Code', 'Cascadia Mono', 'Consolas', 'Monaco', monospace;
     background-color: var(--term-bg);
     color: var(--term-fg);
     overflow: hidden;
     height: 100vh;
     position: relative;
-    /* Hide scrollbar globally */
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* Internet Explorer 10+ */
-}
-
-/* Hide scrollbar for WebKit browsers on body */
-body::-webkit-scrollbar {
-    width: 0px;
-    height: 0px;
-    background: transparent;
-    display: none;
+    font-size: 14px;
+    line-height: 1.4;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 /* Terminal Container */
@@ -112,7 +91,7 @@ body::-webkit-scrollbar {
     overflow: hidden;
 }
 
-/* Terminal Screen - Clean, no CRT effects */
+/* Terminal Screen */
 .terminal-screen {
     width: 100%;
     height: 100%;
@@ -125,11 +104,12 @@ body::-webkit-scrollbar {
     justify-content: center;
 }
 
+
+
 /* Terminal Content */
 .terminal-content {
     position: relative;
     width: 100%;
-    max-width: 1400px;
     margin: 0 auto;
     font-size: 14px;
     display: flex;
@@ -137,87 +117,92 @@ body::-webkit-scrollbar {
     min-height: 0;
 }
 
-/* Terminal Header */
-.terminal-header {
-    margin-bottom: 0.5rem;
-    padding-bottom: 0.3rem;
-    border-bottom: 1px solid var(--gruvbox-bg3);
-    text-align: center;
-}
 
-.terminal-title {
-    font-size: 1.2rem;
-    text-transform: uppercase;
-    letter-spacing: 0.2em;
-    color: var(--gruvbox-yellow);
-    font-weight: bold;
-}
 
-/* Terminal Welcome Section */
+/* Terminal Welcome Section - Enhanced */
 .terminal-welcome {
     margin-bottom: 0.5rem;
-    text-align: center;
     flex-shrink: 0;
+    width: 100%;
+    text-align: center;
+    padding: 1rem 0;
+    border-bottom: 2px solid var(--gruvbox-bg2);
+    position: relative;
 }
 
-/* Terminal Output */
+
+
+/* Left aligned text */
+.left-aligned {
+    text-align: left;
+    display: block;
+    width: 100%;
+}
+
+/* Terminal Output - Enhanced scrollbar */
 .terminal-output {
     margin-bottom: 0.5rem;
-    min-height: 100px;
     max-height: calc(100vh - 450px);
     overflow-y: auto;
     overflow-x: hidden;
     flex-grow: 1;
-    /* Hide scrollbar */
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* Internet Explorer 10+ */
+    /* Instant scrolling like real terminal */
+    scroll-behavior: auto;
+    /* Custom scrollbar for webkit browsers */
+    scrollbar-width: thin;
+    scrollbar-color: var(--gruvbox-bg3) var(--gruvbox-bg1);
 }
 
-/* Hide scrollbar for WebKit browsers - comprehensive */
+/* Custom scrollbar styling */
 .terminal-output::-webkit-scrollbar {
-    width: 0px;
-    height: 0px;
-    background: transparent;
-    display: none;
+    width: 8px;
+    display: block !important;
 }
 
 .terminal-output::-webkit-scrollbar-track {
-    background: transparent;
-    display: none;
+    background: var(--gruvbox-bg1);
+    border-radius: 4px;
 }
 
 .terminal-output::-webkit-scrollbar-thumb {
-    background: transparent;
-    display: none;
+    background: var(--gruvbox-bg3);
+    border-radius: 4px;
+    transition: background 0.2s ease;
 }
 
 .terminal-output::-webkit-scrollbar-thumb:hover {
-    background: transparent;
-    display: none;
+    background: var(--gruvbox-bg4);
 }
 
-.terminal-output::-webkit-scrollbar-thumb:active {
-    background: transparent;
-    display: none;
+/* Firefox scrollbar */
+.terminal-output {
+    scrollbar-width: thin;
+    scrollbar-color: var(--gruvbox-bg3) var(--gruvbox-bg1);
 }
 
+/* Terminal line enhancements */
 .terminal-line {
-    margin-bottom: 0.1rem;
     word-wrap: break-word;
     white-space: pre-wrap;
-    padding: 0.1rem 0.3rem;
+    display: block;
+    margin-bottom: 0.5rem;
+    position: relative;
+    animation: typeIn 0.1s ease-out;
 }
 
-.terminal-line.command {
-    color: var(--gruvbox-green-bright);
+@keyframes typeIn {
+    from {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
 .terminal-line.output {
     color: var(--term-fg);
-}
-
-.terminal-line.error {
-    color: var(--gruvbox-red-bright);
 }
 
 .terminal-line.info {
@@ -230,26 +215,62 @@ body::-webkit-scrollbar {
 
 .terminal-line.dim {
     color: var(--gruvbox-gray);
+    opacity: 0.7;
 }
 
 /* Command output specific styling */
 .terminal-output .terminal-line {
-    padding: 0.1rem 0.5rem;
-    margin-bottom: 0.1rem;
+    padding: 0 0.5rem;
 }
 
-.terminal-output .terminal-line.command {
-    background: rgba(184, 187, 38, 0.05);
-    border-left: 2px solid rgba(184, 187, 38, 0.4);
-    padding-left: 1rem;
+/* Enhanced command styling */
+.terminal-line.command {
+    color: var(--gruvbox-green-bright);
+    background: linear-gradient(to right, rgba(184, 187, 38, 0.15), rgba(184, 187, 38, 0.05), transparent);
+    border-left: 3px solid var(--gruvbox-green-bright);
+    padding: 0.25rem 0.5rem;
     margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
 }
 
-.terminal-output .terminal-line.error {
-    background: rgba(251, 73, 52, 0.05);
-    border-left: 2px solid rgba(251, 73, 52, 0.4);
-    padding-left: 1rem;
+.terminal-line.command::before {
+    content: "$ ";
+    color: var(--gruvbox-aqua-bright);
+    font-weight: bold;
+}
+
+.terminal-line.command:hover {
+    background: linear-gradient(to right, rgba(184, 187, 38, 0.25), rgba(184, 187, 38, 0.1), transparent) !important;
+    border-left-width: 5px;
+    padding-left: calc(0.5rem - 2px);
+}
+
+/* Enhanced error styling */
+.terminal-line.error {
+    color: var(--gruvbox-red-bright);
+    background: linear-gradient(to right, rgba(251, 73, 52, 0.15), rgba(251, 73, 52, 0.05), transparent);
+    border-left: 3px solid var(--gruvbox-red-bright);
+    padding: 0.25rem 0.5rem;
     margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.terminal-line.error::before {
+    content: "✗ ";
+    color: var(--gruvbox-red);
+    font-weight: bold;
+}
+
+.terminal-line.error:hover {
+    background: linear-gradient(to right, rgba(251, 73, 52, 0.25), rgba(251, 73, 52, 0.1), transparent) !important;
+    border-left-width: 5px;
+    padding-left: calc(0.5rem - 2px);
 }
 
 /* Add spacing for command blocks */
@@ -258,20 +279,61 @@ body::-webkit-scrollbar {
     padding-left: 1.5rem;
 }
 
-/* Command Prompt */
+/* Add padding to command response sections */
+.terminal-output .command-output {
+    padding: 0 1.5rem;
+}
+
+/* Command Prompt - Enhanced */
 .terminal-prompt {
     display: flex;
     align-items: center;
     margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    position: relative;
 }
 
-.prompt-symbol {
-    color: var(--gruvbox-aqua-bright);
-    margin-right: 0.5rem;
+/* Gruvbox-themed prompt components */
+.prompt-user {
+    color: var(--gruvbox-green-bright);
     user-select: none;
     font-weight: bold;
 }
 
+.prompt-at {
+    color: var(--gruvbox-fg3);
+    user-select: none;
+}
+
+.prompt-host {
+    color: var(--gruvbox-yellow-bright);
+    user-select: none;
+    font-weight: bold;
+}
+
+.prompt-separator {
+    color: var(--gruvbox-fg3);
+    user-select: none;
+}
+
+.prompt-path {
+    color: var(--gruvbox-blue-bright);
+    user-select: none;
+    font-weight: bold;
+}
+
+.prompt-symbol {
+    color: var(--gruvbox-fg1);
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    user-select: none;
+    font-weight: normal;
+    font-size: inherit;
+}
+
+
+
+/* Terminal Input */
 .terminal-input {
     flex: 1;
     background: transparent;
@@ -280,130 +342,113 @@ body::-webkit-scrollbar {
     font-family: inherit;
     font-size: inherit;
     outline: none;
-    caret-color: var(--gruvbox-yellow);
-    /* Force block cursor */
-    caret-shape: block;
-    -webkit-text-fill-color: var(--term-fg);
+    caret-color: var(--gruvbox-yellow-bright); /* Use bright yellow for better visibility */
+    caret-shape: block; /* Make it a block cursor like terminals */
 }
 
-/* Custom block cursor for browsers that don't support caret-shape */
+/* Terminal loading indicator */
+.terminal-loading {
+    color: var(--gruvbox-yellow);
+    animation: pulse 1s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+}
+
+/* Ensure cursor is visible on focus */
 .terminal-input:focus {
-    caret-color: var(--gruvbox-yellow);
-    text-shadow: 0 0 0 var(--gruvbox-yellow);
+    caret-color: var(--gruvbox-yellow-bright);
+    outline: none;
 }
 
-/* Terminal-style time display */
-.terminal-time {
-    display: inline-block;
-    color: var(--gruvbox-yellow-bright);
-    margin-left: 1em;
+/* Simple time display in prompt - pure theme style */
+.terminal-prompt-time {
+    margin-left: auto;
+    color: var(--gruvbox-red-bright);
+    margin-right: 0.5rem;
     font-size: inherit;
-    font-weight: normal;
     font-family: inherit;
+    opacity: 0.8;
+    font-variant-numeric: tabular-nums;
 }
 
-@keyframes blink {
-    0%, 49% { opacity: 1; }
-    50%, 100% { opacity: 0; }
-}
 
 /* ASCII Art */
 .ascii-art {
-    color: var(--gruvbox-green);
-    font-size: 12px;
+    color: var(--gruvbox-green-bright);
+    font-size: 11px;
     margin: 1rem 0;
     white-space: pre;
     overflow-x: auto;
     font-weight: bold;
     text-align: center;
-}
-
-/* About section styling - single paragraph format */
-.about-section {
-    margin: 0.3rem 0;
+    display: block;
 }
 
 
-/* Contact section styling - matching about section spacing */
-.contact-section {
-    margin: 0.3rem 0;
+
+
+/* General Command Output Styling */
+.command-output {
+    margin: 0.5rem 0;
+    border-left: 2px solid var(--gruvbox-bg2);
+    padding-left: 1rem;
 }
 
-.contact-intro {
+.output-content {
+    font-family: inherit;
+    white-space: pre-wrap;
+    margin: 0;
     color: var(--gruvbox-fg1);
-    margin-bottom: 0.05rem;
-    font-size: inherit;
-    line-height: 1.1;
+}
+
+/* Contact section styling */
+.contact-section {
+    margin: 0;
+    padding: 0;
+}
+
+/* Contact items - shared styles */
+.contact-section > div {
+    margin: 0.25rem 0;
     cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 0.25rem 0.5rem;
+    position: relative;
 }
 
-.contact-intro:hover {
-    background: rgba(131, 165, 152, 0.05);
+
+
+.contact-section > div:hover {
+    background: linear-gradient(to right, rgba(131, 165, 152, 0.2), rgba(131, 165, 152, 0.05), transparent);
+    border-left: 4px solid rgba(131, 165, 152, 0.4);
+    transform: translateX(5px);
 }
 
+
+
+/* Contact item colors */
 .contact-email {
     color: var(--gruvbox-yellow-bright);
-    margin-bottom: 0.05rem;
-    line-height: 1.1;
-    cursor: pointer;
-}
-
-.contact-email:hover {
-    background: rgba(131, 165, 152, 0.05);
 }
 
 .contact-github {
     color: var(--gruvbox-fg0);
-    margin-bottom: 0.05rem;
-    line-height: 1.1;
-    cursor: pointer;
-}
-
-.contact-github:hover {
-    background: rgba(131, 165, 152, 0.05);
 }
 
 .contact-linkedin {
     color: var(--gruvbox-aqua-bright);
-    margin-bottom: 0.05rem;
-    line-height: 1.1;
-    cursor: pointer;
-}
-
-.contact-linkedin:hover {
-    background: rgba(131, 165, 152, 0.05);
 }
 
 .contact-twitter {
     color: var(--gruvbox-purple-bright);
-    margin-bottom: 0.05rem;
-    line-height: 1.1;
-    cursor: pointer;
 }
 
-.contact-twitter:hover {
-    background: rgba(131, 165, 152, 0.05);
-}
 
-/* Help Table */
-.help-table {
-    margin: 1rem 0;
-    border-collapse: collapse;
-}
 
-.help-table td {
-    padding: 0.2rem 2rem 0.2rem 0;
-    vertical-align: top;
-}
 
-.help-table .command {
-    color: var(--gruvbox-yellow);
-    font-weight: bold;
-}
-
-.help-table .description {
-    color: var(--gruvbox-fg3);
-}
 
 /* Links in Terminal */
 .terminal-link {
@@ -417,23 +462,9 @@ body::-webkit-scrollbar {
     text-decoration: underline;
 }
 
-/* Loading Animation */
-.loading {
-    display: inline-block;
-}
 
-.loading::after {
-    content: "...";
-    animation: loading 1.5s infinite;
-}
 
-@keyframes loading {
-    0% { content: "."; }
-    33% { content: ".."; }
-    66% { content: "..."; }
-}
-
-/* Skills-Style Projects Display */
+/* Enhanced Projects Display */
 .projects-grid {
     display: block;
     margin: 0;
@@ -442,23 +473,32 @@ body::-webkit-scrollbar {
 }
 
 .project-card {
-    margin: 0.05rem 0;
+    margin: 0.25rem 0;
     display: block;
     text-align: left;
-    line-height: 1.1;
+    line-height: 1.2;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 0.25rem 0.5rem;
+    position: relative;
 }
+
+
 
 .project-card:hover {
-    background: rgba(251, 189, 47, 0.05);
+    background: linear-gradient(to right, rgba(131, 165, 152, 0.2), rgba(131, 165, 152, 0.05), transparent);
+    border-left: 4px solid rgba(131, 165, 152, 0.4);
+    transform: translateX(5px);
 }
 
-.project-number {
-    display: none;
-}
+
+
+
 
 .project-title {
     display: inline-block;
-    width: 250px;
+    width: 20%;
+    min-width: 200px;
     color: var(--gruvbox-fg0);
     font-weight: bold;
     overflow: hidden;
@@ -469,7 +509,8 @@ body::-webkit-scrollbar {
 
 .project-description {
     display: inline-block;
-    width: 350px;
+    width: 40%;
+    min-width: 300px;
     color: var(--gruvbox-fg3);
     overflow: hidden;
     text-overflow: ellipsis;
@@ -479,7 +520,8 @@ body::-webkit-scrollbar {
 
 .project-tech {
     display: inline-block;
-    width: 200px;
+    width: 25%;
+    min-width: 180px;
     color: var(--gruvbox-yellow-bright);
     overflow: hidden;
     text-overflow: ellipsis;
@@ -495,7 +537,8 @@ body::-webkit-scrollbar {
 
 .project-links {
     display: inline-block;
-    width: 120px;
+    width: 10%;
+    min-width: 100px;
     vertical-align: top;
 }
 
@@ -511,8 +554,7 @@ body::-webkit-scrollbar {
 }
 
 
-
-/* Skills Display */
+/* Enhanced Skills Display */
 .skills-grid {
     display: block;
     margin: 0;
@@ -521,11 +563,12 @@ body::-webkit-scrollbar {
 }
 
 .skill-category {
-    margin: 0.05rem 0;
+    margin: 0.25rem 0;
     display: block;
     text-align: left;
     white-space: nowrap;
-    line-height: 1.1;
+    line-height: 1.2;
+    padding: 0.25rem 0;
 }
 
 .skill-name {
@@ -534,75 +577,40 @@ body::-webkit-scrollbar {
     color: var(--gruvbox-yellow-bright);
     font-weight: bold;
     margin-right: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
+
+
 
 .skill-values {
     display: inline;
     color: var(--gruvbox-fg0);
 }
 
-/* Skill Tag Color Coding */
+/* Skill Tag Styling */
 .skill-tag {
     margin-right: 0.3rem;
 }
 
-.skill-tag.language {
-    color: var(--gruvbox-purple-bright);
-}
-
-.skill-tag.framework {
-    color: var(--gruvbox-green-bright);
-}
-
-.skill-tag.database {
-    color: var(--gruvbox-blue-bright);
-}
-
-.skill-tag.cloud {
-    color: var(--gruvbox-aqua-bright);
-}
-
-.skill-tag.devops {
-    color: var(--gruvbox-orange-bright);
-}
-
-.skill-tag.tool {
-    color: var(--gruvbox-gray);
-}
-
-.skill-tag.os {
-    color: var(--gruvbox-red-bright);
-}
-
-.skill-tag.math {
-    color: var(--gruvbox-fg0);
-}
-
-.skill-tag.default {
-    color: var(--gruvbox-gray);
-}
+/* Skill Tag Colors by Category */
+.skill-tag.language { color: var(--gruvbox-purple-bright); }
+.skill-tag.framework { color: var(--gruvbox-green-bright); }
+.skill-tag.database { color: var(--gruvbox-blue-bright); }
+.skill-tag.cloud { color: var(--gruvbox-aqua-bright); }
+.skill-tag.devops { color: var(--gruvbox-orange-bright); }
+.skill-tag.tool { color: var(--gruvbox-gray); }
+.skill-tag.os { color: var(--gruvbox-red-bright); }
+.skill-tag.math { color: var(--gruvbox-fg0); }
+.skill-tag.default { color: var(--gruvbox-gray); }
 
 
-/* Matrix Rain Effect (optional) */
-.matrix-rain {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    opacity: 0.05;
-    z-index: 0;
-}
+
 
 /* Responsive Design */
 @media (max-width: 1200px) {
     .terminal-screen {
         padding: 2rem;
-    }
-    
-    .terminal-content {
-        max-width: 1000px;
     }
 }
 
@@ -639,25 +647,5 @@ body::-webkit-scrollbar {
 
 
 
-/* Boot Sequence Animation - Subtle */
-@keyframes bootSequence {
-    0% { opacity: 0; }
-    100% { opacity: 1; }
-}
 
-.boot-sequence {
-    animation: bootSequence 0.5s ease-out;
-}
-
-/* Type Writer Effect */
-@keyframes typewriter {
-    from { width: 0; }
-    to { width: 100%; }
-}
-
-.typewriter {
-    overflow: hidden;
-    white-space: nowrap;
-    animation: typewriter 2s steps(40, end);
-}
 
