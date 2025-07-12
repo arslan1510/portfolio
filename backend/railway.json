@@ -4,7 +4,7 @@
     "builder": "dockerfile"
   },
   "deploy": {
-    "startCommand": "dotnet project.dll",
+    "startCommand": "dotnet Portfolio.Backend.dll",
     "healthcheckPath": "/",
     "healthcheckTimeout": 300,
     "restartPolicyType": "always"

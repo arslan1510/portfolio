@@ -4,22 +4,18 @@ FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 # Set working directory
 WORKDIR /app
 
-# Copy solution file
-COPY ../Portfolio.sln .
-
 # Copy project file and restore dependencies
-COPY project.fsproj ./backend/
-RUN dotnet restore backend/project.fsproj
+COPY project.fsproj ./
+RUN dotnet restore project.fsproj
 
-# Copy source code and frontend assets
-COPY . ./backend/
-COPY ../frontend ./frontend/
+# Copy source code
+COPY . ./
 
 # Build the application
-RUN dotnet build backend/project.fsproj -c Release -o /app/build
+RUN dotnet build project.fsproj -c Release -o /app/build
 
 # Publish the application
-RUN dotnet publish backend/project.fsproj -c Release -o /app/publish
+RUN dotnet publish project.fsproj -c Release -o /app/publish
 
 # Use .NET 9 runtime
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
