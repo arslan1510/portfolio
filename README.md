@@ -15,6 +15,5 @@ A terminal-style portfolio website built with F# and Oxpecker.
 
 ## Tech Stack
 
-- **Backend**: F# with Oxpecker
-- **Frontend**: HTML, CSS, JavaScript
+- **Backend & Frontend**: F# with Oxpecker
 - **Deployment**: Railway
