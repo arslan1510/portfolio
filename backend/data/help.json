@@ -8,6 +8,7 @@
     "clear": "Clear the terminal",
     "whoami": "Display current user",
     "pwd": "Print working directory",
-    "date": "Display current date and time"
+    "date": "Display current date and time",
+    "fastfetch": "Display system information"
   }
 } 

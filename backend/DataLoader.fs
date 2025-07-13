@@ -29,9 +29,6 @@ let private memoize (fn: 'a -> 'b) =
             cache.[x] <- value
             value
 
-let private loadTextDataMemoized =
-    memoize (fun filePath -> readJsonFile<TextData> filePath)
-
 let private loadAboutDataMemoized =
     memoize (fun filePath -> readJsonFile<AboutData> filePath)
 
@@ -43,6 +40,9 @@ let private loadContactDataMemoized =
 
 let private loadSkillsDataMemoized =
     memoize (fun filePath -> readJsonFile<SkillsData> filePath)
+
+let private fastFetchDataMemoized =
+    memoize (fun filePath -> readJsonFile<FastFetchData> filePath)
 
 let loadHelpText () =
     let helpData = loadHelpDataMemoized "data/help.json"
@@ -65,3 +65,8 @@ let loadContactInfo () =
 
 let loadSkills () =
     loadSkillsDataMemoized "data/skills.json"
+
+
+let loadFastFetchData () =
+    let data = fastFetchDataMemoized "data/fastfetch.json"
+    System.Text.Json.JsonSerializer.Serialize(data)

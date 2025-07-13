@@ -14,6 +14,44 @@ let asciiArt =
 ╚═╝  ╚═╝╚══════╝╚══════╝╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝ ╚═════╝ ╚══════╝╚══════╝╚═╝╚═════╝ ╚══════╝  ╚═══╝  
 """
 
+let fastFetchAsciiArt =
+    """                                                                                                                      
+                            ▓  ▓▓                             
+                           ▓▓  ▓▓▓                            
+                         ▓▓▓▓  ▓▓▓▓▓                          
+                       ▓▓▓▓▓▓  ▓▓▓▓▓▓▓                        
+                     ▓▓▓▓▓▓▓▓  ▓▓▓▓▓▓▓▓▓                      
+                   ▓▓▓▓▓▓▓▓▓▓  ▓▓▓▓▓▓▓▓▓▓▓                    
+                 ▓▓▓▓▓▓▓▓▓▓▓▓  ▓▓▓▓▓▓▓▓▓▓▓▓▓                  
+                ▓▓▓▓▓▓▓▓▓▓▓▓▓  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓                
+              ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓   ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓              
+            ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓       ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓            
+          ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓    ▓      ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓           
+        ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓    ▓▓▓        ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓         
+       ▓▓▓▓▓▓▓▓▓▓▓▓▓▓    ▓▓▓▓▓         ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓       
+     ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓    ▓▓▓▓▓▓           ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓     
+   ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓    ▓▓▓▓▓▓▓▓             ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓   
+ ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓    ▓▓▓▓▓▓▓▓▓▓               ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ 
+ ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓   ▓▓▓▓▓▓▓▓▓▓▓                ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ 
+  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓    ▓▓▓▓▓▓▓▓▓              ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓  
+    ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓    ▓▓▓▓▓▓▓            ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓    
+      ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓    ▓▓▓▓▓          ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓      
+        ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓    ▓▓▓        ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓        
+          ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓    ▓      ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓          
+           ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓        ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓            
+             ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓     ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓              
+               ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓                
+                 ▓▓▓▓▓▓▓▓▓▓▓▓▓ ▓▓▓▓▓▓▓▓▓▓▓▓▓                  
+                   ▓▓▓▓▓▓▓▓▓▓▓ ▓▓▓▓▓▓▓▓▓▓▓▓                   
+                     ▓▓▓▓▓▓▓▓▓ ▓▓▓▓▓▓▓▓▓▓                     
+                      ▓▓▓▓▓▓▓▓ ▓▓▓▓▓▓▓▓                       
+                        ▓▓▓▓▓▓ ▓▓▓▓▓▓                         
+                          ▓▓▓▓ ▓▓▓▓                           
+                            ▓▓ ▓▓                             
+                                                                       
+"""
+
+
 module Styles =
     let gruvboxColor color = $"color: var(--gruvbox-{color});"
 
@@ -174,6 +212,7 @@ let projectCard (project: Project) =
         }
     }
 
+
 let renderProjects (output: string) =
     try
         let projects = System.Text.Json.JsonSerializer.Deserialize<Project[]>(output)
@@ -332,12 +371,49 @@ let renderContact (output: string) =
         }
     }
 
+let renderFastFetch (output: string) =
+    try
+        let fastFetchData =
+            System.Text.Json.JsonSerializer.Deserialize<FastFetchData>(output)
+
+        match fastFetchData with
+        | null -> div (class' = "command-output") { pre (class' = "output-content") { output } }
+        | data ->
+            div (class' = "command-output") {
+                div (class' = "fastfetch-container") {
+                    div (class' = "fastfetch-ascii") { pre (class' = "output-content") { fastFetchAsciiArt } }
+
+                    div (class' = "fastfetch-info") {
+                        div (class' = "terminal-line", style = Styles.gruvboxBright "blue" + Styles.fontWeight "bold") {
+                            data.header
+                        }
+
+                        for item in data.items do
+                            div (class' = "terminal-line") {
+                                span (style = Styles.gruvboxBright "yellow") { $"{item.icon} {item.title}:" }
+                                span (style = Styles.marginLeft "1rem") { item.description }
+                            }
+                    }
+                }
+            }
+    with _ ->
+        div (class' = "command-output") {
+            pre (class' = "output-content") { output }
+            pre (class' = "output-content") { fastFetchAsciiArt }
+        }
+
 let renderCommandResponse (result: Result<string, string>) =
     match result with
     | Ok output when output.StartsWith("[{") -> renderProjects output
     | Ok output when output.Contains("categories") -> renderSkills output
     | Ok output when output = "CLEAR_TERMINAL" ->
         div (id = "terminal-output", class' = "terminal-output", hxSwapOob = "innerHTML") { "" }
+    | Ok output when
+        output.StartsWith("{")
+        && output.Contains("\"header\"")
+        && output.Contains("\"items\"")
+        ->
+        renderFastFetch output
     | Ok output when output.StartsWith("{") && output.Contains("\"header\"") -> renderAbout output
     | Ok output when output.Contains("  help") || output.Contains("  about") -> renderHelp output
     | Ok output when output.Contains("Email:") && output.Contains("GitHub:") -> renderContact output

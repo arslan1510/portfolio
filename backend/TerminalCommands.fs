@@ -28,5 +28,6 @@ let executeCommand (command: string) (args: string[]) =
         | "date" -> return Ok(DateTime.Now.ToString())
         | "echo" -> return Ok(String.Join(" ", args))
         | "clear" -> return Ok "CLEAR_TERMINAL"
+        | "fastfetch" -> return Ok(loadFastFetchData ())
         | cmd -> return Error $"Command not found: {cmd}. Type 'help' for available commands."
     }

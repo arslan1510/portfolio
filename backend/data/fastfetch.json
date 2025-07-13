@@ -1,0 +1,85 @@
+{
+    "header": "System Information",
+    "items": [
+        {
+            "title": "OS",
+            "description": ".NET",
+            "icon": "[OS]"
+        },
+        {
+            "title": "Host",
+            "description": "Portfolio Terminal v0.3",
+            "icon": "[HOST]"
+        },
+        {
+            "title": "Kernel",
+            "description": "F#",
+            "icon": "[KERN]"
+        },
+        {
+            "title": "Shell",
+            "description": "Oxpecker",
+            "icon": "[SHELL]"
+        },
+        {
+            "title": "Terminal",
+            "description": "Web Terminal (Oxpecker)",
+            "icon": "[TERM]"
+        },
+        {
+            "title": "CPU",
+            "description": "Backend Engine @ 3.6GHz",
+            "icon": "[CPU]"
+        },
+        {
+            "title": "GPU",
+            "description": "CSS Rendering Pipeline",
+            "icon": "[GPU]"
+        },
+        {
+            "title": "Memory",
+            "description": "32MB Session Storage",
+            "icon": "[MEM]"
+        },
+        {
+            "title": "Disk",
+            "description": "2TB Code Repository",
+            "icon": "[DISK]"
+        },
+        {
+            "title": "Resolution",
+            "description": "Responsive @ 144fps",
+            "icon": "[RES]"
+        },
+        {
+            "title": "Uptime",
+            "description": "24d 7h 32m",
+            "icon": "[UP]"
+        },
+        {
+            "title": "Packages",
+            "description": "47 NuGet Dependencies",
+            "icon": "[PKG]"
+        },
+        {
+            "title": "Language",
+            "description": "F# 8.0 (.NET 9.0)",
+            "icon": "[LANG]"
+        },
+        {
+            "title": "Framework",
+            "description": "Oxpecker 1.3.0",
+            "icon": "[FW]"
+        },
+        {
+            "title": "Editor",
+            "description": "Helix 25.01.1",
+            "icon": "[EDIT]"
+        },
+        {
+            "title": "Theme",
+            "description": "Gruvbox Dark",
+            "icon": "[THEME]"
+        }
+    ]
+}

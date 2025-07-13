@@ -37,6 +37,15 @@ type AboutData =
       current: string
       footer: string }
 
+type FastFetchItem =
+    { title: string
+      description: string
+      icon: string }
+
+type FastFetchData =
+    { header: string
+      items: FastFetchItem[] }
+
 type SkillInfo = { badgeUrl: string }
 
 type SkillItem = { name: string; info: SkillInfo }
