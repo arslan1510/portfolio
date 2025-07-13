@@ -6,13 +6,28 @@ open Models
 
 let asciiArt =
     """
- █████╗ ██╗     ███████╗██████╗ ██╗  ██╗███╗   ██╗██╗   ██╗██╗     ██╗        ██████╗ ███████╗██╗   ██╗
+ █████╗ ██╗     ███████╗██████╗ ██╗  ██╗███╗   ██╗██╗   ██╗██╗     ██╗        ██████╗ ███████╗██╗   ██║
 ██╔══██╗██║     ██╔════╝██╔══██╗██║  ██║████╗  ██║██║   ██║██║     ██║        ██╔══██╗██╔════╝██║   ██║
 ███████║██║     █████╗  ██████╔╝███████║██╔██╗ ██║██║   ██║██║     ██║        ██║  ██║█████╗  ██║   ██║
 ██╔══██║██║     ██╔══╝  ██╔═══╝ ██╔══██║██║╚██╗██║██║   ██║██║     ██║        ██║  ██║██╔══╝  ╚██╗ ██╔╝
 ██║  ██║███████╗███████╗██║     ██║  ██║██║ ╚████║╚██████╔╝███████╗███████╗██╗██████╔╝███████╗ ╚████╔╝ 
 ╚═╝  ╚═╝╚══════╝╚══════╝╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝ ╚═════╝ ╚══════╝╚══════╝╚═╝╚═════╝ ╚══════╝  ╚═══╝  
 """
+
+module Styles =
+    let gruvboxColor color = $"color: var(--gruvbox-{color});"
+
+    let gruvboxBright color =
+        $"color: var(--gruvbox-{color}-bright);"
+
+    let marginTop value = $"margin-top: {value};"
+    let fontWeight weight = $"font-weight: {weight};"
+    let marginLeft value = $"margin-left: {value};"
+
+type TerminalState =
+    | Normal
+    | Minimized
+    | Maximized
 
 let terminalWelcome =
     div (id = "terminal-welcome", class' = "terminal-welcome") {
@@ -70,158 +85,65 @@ let terminalContent =
         terminalPrompt
     }
 
-let terminalComponent =
-    div (id = "terminal-container", class' = "terminal-container") {
-        div (id = "terminal-window", class' = "terminal-window") {
-            div (class' = "terminal-title-bar") {
-                div (class' = "terminal-buttons") {
-                    div (
-                        class' = "terminal-button minimize",
-                        hxPost = "/api/terminal/minimize",
-                        hxTarget = "#terminal-window",
-                        hxSwap = "outerHTML"
-                    ) {
-                        ""
-                    }
+let terminalButtons (state: TerminalState) =
+    let (minimizeAction, maximizeAction) =
+        match state with
+        | Normal -> ("/api/terminal/minimize", "/api/terminal/maximize")
+        | Minimized -> ("/api/terminal/restore", "/api/terminal/maximize")
+        | Maximized -> ("/api/terminal/minimize", "/api/terminal/restore")
 
-                    div (
-                        class' = "terminal-button maximize",
-                        hxPost = "/api/terminal/maximize",
-                        hxTarget = "#terminal-window",
-                        hxSwap = "outerHTML"
-                    ) {
-                        ""
-                    }
+    div (class' = "terminal-buttons") {
+        div (
+            class' = "terminal-button minimize",
+            hxPost = minimizeAction,
+            hxTarget = "#terminal-window",
+            hxSwap = "outerHTML"
+        ) {
+            ""
+        }
 
-                    div (
-                        class' = "terminal-button close",
-                        hxPost = "/api/terminal/close",
-                        hxTarget = "#terminal-container",
-                        hxSwap = "innerHTML"
-                    ) {
-                        ""
-                    }
-                }
+        div (
+            class' = "terminal-button maximize",
+            hxPost = maximizeAction,
+            hxTarget = "#terminal-window",
+            hxSwap = "outerHTML"
+        ) {
+            ""
+        }
 
-                div (class' = "terminal-title") { "guest@portfolio:~" }
-            }
+        div (
+            class' = "terminal-button close",
+            hxPost = "/api/terminal/close",
+            hxTarget = "#terminal-container",
+            hxSwap = "innerHTML"
+        ) {
+            ""
+        }
+    }
 
+let createTerminalWindow (state: TerminalState) (includeContent: bool) =
+    let windowStyle =
+        match state with
+        | Minimized -> "height: 40px; width: 300px;"
+        | Maximized -> "width: 100%; height: 100%; border-radius: 0;"
+        | Normal -> ""
+
+    div (id = "terminal-window", class' = "terminal-window", style = windowStyle) {
+        div (class' = "terminal-title-bar") {
+            terminalButtons state
+            div (class' = "terminal-title") { "guest@portfolio:~" }
+        }
+
+        if includeContent then
             div (class' = "terminal-screen") { terminalContent }
-        }
     }
 
+let minimizedTerminal = createTerminalWindow Minimized false
+let maximizedTerminal = createTerminalWindow Maximized true
+let normalTerminal = createTerminalWindow Normal true
 
-let minimizedTerminal =
-    div (id = "terminal-window", class' = "terminal-window", style = "height: 40px; width: 300px;") {
-        div (class' = "terminal-title-bar") {
-            div (class' = "terminal-buttons") {
-                div (
-                    class' = "terminal-button minimize",
-                    hxPost = "/api/terminal/restore",
-                    hxTarget = "#terminal-window",
-                    hxSwap = "outerHTML"
-                ) {
-                    ""
-                }
-
-                div (
-                    class' = "terminal-button maximize",
-                    hxPost = "/api/terminal/maximize",
-                    hxTarget = "#terminal-window",
-                    hxSwap = "outerHTML"
-                ) {
-                    ""
-                }
-
-                div (
-                    class' = "terminal-button close",
-                    hxPost = "/api/terminal/close",
-                    hxTarget = "#terminal-container",
-                    hxSwap = "innerHTML"
-                ) {
-                    ""
-                }
-            }
-
-            div (class' = "terminal-title") { "guest@portfolio:~" }
-        }
-    }
-
-let maximizedTerminal =
-    div (id = "terminal-window", class' = "terminal-window", style = "width: 100%; height: 100%; border-radius: 0;") {
-        div (class' = "terminal-title-bar") {
-            div (class' = "terminal-buttons") {
-                div (
-                    class' = "terminal-button minimize",
-                    hxPost = "/api/terminal/minimize",
-                    hxTarget = "#terminal-window",
-                    hxSwap = "outerHTML"
-                ) {
-                    ""
-                }
-
-                div (
-                    class' = "terminal-button maximize",
-                    hxPost = "/api/terminal/restore",
-                    hxTarget = "#terminal-window",
-                    hxSwap = "outerHTML"
-                ) {
-                    ""
-                }
-
-                div (
-                    class' = "terminal-button close",
-                    hxPost = "/api/terminal/close",
-                    hxTarget = "#terminal-container",
-                    hxSwap = "innerHTML"
-                ) {
-                    ""
-                }
-            }
-
-            div (class' = "terminal-title") { "guest@portfolio:~" }
-        }
-
-        div (class' = "terminal-screen") { terminalContent }
-    }
-
-let normalTerminal =
-    div (id = "terminal-window", class' = "terminal-window") {
-        div (class' = "terminal-title-bar") {
-            div (class' = "terminal-buttons") {
-                div (
-                    class' = "terminal-button minimize",
-                    hxPost = "/api/terminal/minimize",
-                    hxTarget = "#terminal-window",
-                    hxSwap = "outerHTML"
-                ) {
-                    ""
-                }
-
-                div (
-                    class' = "terminal-button maximize",
-                    hxPost = "/api/terminal/maximize",
-                    hxTarget = "#terminal-window",
-                    hxSwap = "outerHTML"
-                ) {
-                    ""
-                }
-
-                div (
-                    class' = "terminal-button close",
-                    hxPost = "/api/terminal/close",
-                    hxTarget = "#terminal-container",
-                    hxSwap = "innerHTML"
-                ) {
-                    ""
-                }
-            }
-
-            div (class' = "terminal-title") { "guest@portfolio:~" }
-        }
-
-        div (class' = "terminal-screen") { terminalContent }
-    }
+let terminalComponent =
+    div (id = "terminal-container", class' = "terminal-container") { normalTerminal }
 
 let closedTerminal = div () { "" }
 
@@ -252,6 +174,20 @@ let projectCard (project: Project) =
         }
     }
 
+let renderProjects (output: string) =
+    try
+        let projects = System.Text.Json.JsonSerializer.Deserialize<Project[]>(output)
+
+        div (class' = "command-output") {
+            div (class' = "projects-grid") {
+                for project in projects do
+                    projectCard project
+            }
+        }
+    with _ ->
+        div (class' = "command-output") { pre (class' = "output-content") { output } }
+
+// Skills rendering
 let skillCategory (categoryKey: string) (category: SkillCategory) =
     div (class' = "skill-category") {
         div (class' = "skill-badges") {
@@ -270,153 +206,140 @@ let skillCategory (categoryKey: string) (category: SkillCategory) =
         }
     }
 
-let renderCommandResponse (result: Result<string, string>) =
-    match result with
-    | Ok output when output.StartsWith("[{") ->
-        try
-            let projects = System.Text.Json.JsonSerializer.Deserialize<Project[]>(output)
+let renderSkills (output: string) =
+    try
+        let skillsData = System.Text.Json.JsonSerializer.Deserialize<SkillsData>(output)
 
+        match skillsData with
+        | null -> div (class' = "command-output") { pre (class' = "output-content") { output } }
+        | data ->
             div (class' = "command-output") {
-                div (class' = "projects-grid") {
-                    for project in projects do
-                        projectCard project
+                div (class' = "skills-grid") {
+                    for categoryItem in data.categories do
+                        let categoryKey = categoryItem.key
+                        let category = categoryItem.category
+                        skillCategory categoryKey category
                 }
             }
-        with _ ->
-            div (class' = "command-output") { pre (class' = "output-content") { output } }
-    | Ok output when output.Contains("categories") ->
-        try
-            let skillsData = System.Text.Json.JsonSerializer.Deserialize<SkillsData>(output)
+    with _ ->
+        div (class' = "command-output") { pre (class' = "output-content") { output } }
 
-            match skillsData with
-            | null -> div (class' = "command-output") { pre (class' = "output-content") { output } }
-            | data ->
-                div (class' = "command-output") {
-                    div (class' = "skills-grid") {
-                        for categoryItem in data.categories do
-                            let categoryKey = categoryItem.key
-                            let category = categoryItem.category
-                            skillCategory categoryKey category
+let renderAboutData (data: AboutData) =
+    div (class' = "command-output") {
+        div (class' = "terminal-line") { data.header }
+
+        div (class' = "terminal-line", style = Styles.marginTop "0.5rem") {
+            span (style = Styles.gruvboxBright "blue" + Styles.fontWeight "bold") { "I have expertise in:" }
+        }
+
+        for expertise in data.expertise do
+            div (class' = "terminal-line") {
+                span (style = Styles.gruvboxBright "yellow") { "  • " }
+                span () { expertise }
+            }
+
+        div (class' = "terminal-line", style = Styles.marginTop "0.5rem") {
+            span (style = Styles.gruvboxBright "blue" + Styles.fontWeight "bold") { "With particular interests in:" }
+        }
+
+        for interest in data.interests do
+            div (class' = "terminal-line") {
+                span (style = Styles.gruvboxBright "yellow") { "  • " }
+                span () { interest }
+            }
+
+        div (class' = "terminal-line", style = Styles.marginTop "0.5rem") {
+            span (style = Styles.gruvboxBright "green") { data.current }
+        }
+
+        div (class' = "terminal-line", style = Styles.marginTop "0.5rem") { data.footer }
+    }
+
+let renderAbout (output: string) =
+    try
+        let aboutData = System.Text.Json.JsonSerializer.Deserialize<AboutData>(output)
+
+        match aboutData with
+        | null -> div (class' = "command-output") { pre (class' = "output-content") { output } }
+        | data -> renderAboutData data
+    with _ ->
+        div (class' = "command-output") { pre (class' = "output-content") { output } }
+
+let renderHelp (output: string) =
+    let lines =
+        output.Split('\n')
+        |> Array.filter (fun s -> not (System.String.IsNullOrWhiteSpace(s)))
+
+    div (class' = "command-output") {
+        for line in lines do
+            let trimmedLine = line.Trim()
+
+            if trimmedLine.StartsWith("  ") && trimmedLine.Length > 2 then
+                let commandPart = trimmedLine.Substring(2)
+
+                let parts =
+                    commandPart.Split([| ' ' |], System.StringSplitOptions.RemoveEmptyEntries)
+
+                if parts.Length >= 2 then
+                    let command = parts.[0]
+                    let description = System.String.Join(" ", parts |> Array.skip 1)
+
+                    div (class' = "terminal-line") {
+                        span (style = Styles.gruvboxBright "green" + Styles.fontWeight "bold") { $"  {command}" }
+                        span (style = Styles.gruvboxColor "fg3" + Styles.marginLeft "1rem") { description }
                     }
-                }
-        with _ ->
-            div (class' = "command-output") { pre (class' = "output-content") { output } }
-    | Ok output when output = "CLEAR_TERMINAL" ->
-        div (id = "terminal-output", class' = "terminal-output", hxSwapOob = "innerHTML") { "" }
-    | Ok output when output.StartsWith("{") && output.Contains("\"header\"") ->
-        try
-            let aboutData = System.Text.Json.JsonSerializer.Deserialize<AboutData>(output)
+                else
+                    div (class' = "terminal-line") { trimmedLine }
+            else
+                div (class' = "terminal-line") { trimmedLine }
+    }
 
-            match aboutData with
-            | null -> div (class' = "command-output") { pre (class' = "output-content") { output } }
-            | data ->
-                div (class' = "command-output") {
-                    div (class' = "terminal-line") { data.header }
+let formatUrl (url: string) =
+    if url.StartsWith("http") then url else $"https://{url}"
 
-                    div (class' = "terminal-line", style = "margin-top: 0.5rem;") {
-                        span (style = "color: var(--gruvbox-blue-bright); font-weight: bold;") {
-                            "I have expertise in:"
-                        }
-                    }
+let createContactLink (label: string) (value: string) (linkType: string) =
+    let href =
+        match linkType with
+        | "email" -> $"mailto:{value}"
+        | _ -> formatUrl value
 
-                    for expertise in data.expertise do
-                        div (class' = "terminal-line") {
-                            span (style = "color: var(--gruvbox-yellow-bright);") { "  • " }
-                            span () { expertise }
-                        }
+    let target = if linkType = "email" then "" else "_blank"
 
-                    div (class' = "terminal-line", style = "margin-top: 0.5rem;") {
-                        span (style = "color: var(--gruvbox-blue-bright); font-weight: bold;") {
-                            "With particular interests in:"
-                        }
-                    }
+    div (class' = $"contact-{linkType}") {
+        span () { $"{label}: " }
+        a (href = href, target = target, class' = "terminal-link") { value }
+    }
 
-                    for interest in data.interests do
-                        div (class' = "terminal-line") {
-                            span (style = "color: var(--gruvbox-yellow-bright);") { "  • " }
-                            span () { interest }
-                        }
+let renderContact (output: string) =
+    let lines =
+        output.Split('\n')
+        |> Array.filter (fun s -> not (System.String.IsNullOrWhiteSpace(s)))
 
-                    div (class' = "terminal-line", style = "margin-top: 0.5rem;") {
-                        span (style = "color: var(--gruvbox-green-bright);") { data.current }
-                    }
-
-                    div (class' = "terminal-line", style = "margin-top: 0.5rem;") { data.footer }
-                }
-        with _ ->
-            div (class' = "command-output") { pre (class' = "output-content") { output } }
-    | Ok output when output.Contains("  help") || output.Contains("  about") ->
-        let lines =
-            output.Split('\n')
-            |> Array.filter (fun s -> not (System.String.IsNullOrWhiteSpace(s)))
-
-        div (class' = "command-output") {
+    div (class' = "command-output") {
+        div (class' = "contact-section") {
             for line in lines do
                 let trimmedLine = line.Trim()
 
-                if trimmedLine.StartsWith("  ") && trimmedLine.Length > 2 then
-                    let commandPart = trimmedLine.Substring(2)
-
-                    let parts =
-                        commandPart.Split([| ' ' |], System.StringSplitOptions.RemoveEmptyEntries)
-
-                    if parts.Length >= 2 then
-                        let command = parts.[0]
-                        let description = System.String.Join(" ", parts |> Array.skip 1)
-
-                        div (class' = "terminal-line") {
-                            span (style = "color: var(--gruvbox-green-bright); font-weight: bold;") { $"  {command}" }
-                            span (style = "color: var(--gruvbox-fg3); margin-left: 1rem;") { description }
-                        }
-                    else
-                        div (class' = "terminal-line") { trimmedLine }
-                else
-                    div (class' = "terminal-line") { trimmedLine }
+                if trimmedLine.StartsWith("Email:") then
+                    let email = trimmedLine.Replace("Email:", "").Trim()
+                    createContactLink "Email" email "email"
+                elif trimmedLine.StartsWith("GitHub:") then
+                    let github = trimmedLine.Replace("GitHub:", "").Trim()
+                    createContactLink "GitHub" github "github"
+                elif trimmedLine.StartsWith("LinkedIn:") then
+                    let linkedin = trimmedLine.Replace("LinkedIn:", "").Trim()
+                    createContactLink "LinkedIn" linkedin "linkedin"
         }
-    | Ok output when output.Contains("Email:") && output.Contains("GitHub:") ->
-        let lines =
-            output.Split('\n')
-            |> Array.filter (fun s -> not (System.String.IsNullOrWhiteSpace(s)))
+    }
 
-        div (class' = "command-output") {
-            div (class' = "contact-section") {
-                for line in lines do
-                    let trimmedLine = line.Trim()
-
-                    if trimmedLine.StartsWith("Email:") then
-                        let email = trimmedLine.Replace("Email:", "").Trim()
-
-                        div (class' = "contact-email") {
-                            span () { "Email: " }
-                            a (href = $"mailto:{email}", class' = "terminal-link") { email }
-                        }
-                    elif trimmedLine.StartsWith("GitHub:") then
-                        let github = trimmedLine.Replace("GitHub:", "").Trim()
-
-                        let githubUrl =
-                            if github.StartsWith("http") then
-                                github
-                            else
-                                $"https://{github}"
-
-                        div (class' = "contact-github") {
-                            span () { "GitHub: " }
-                            a (href = githubUrl, target = "_blank", class' = "terminal-link") { github }
-                        }
-                    elif trimmedLine.StartsWith("LinkedIn:") then
-                        let linkedin = trimmedLine.Replace("LinkedIn:", "").Trim()
-
-                        let linkedinUrl =
-                            if linkedin.StartsWith("http") then
-                                linkedin
-                            else
-                                $"https://{linkedin}"
-
-                        div (class' = "contact-linkedin") {
-                            span () { "LinkedIn: " }
-                            a (href = linkedinUrl, target = "_blank", class' = "terminal-link") { linkedin }
-                        }
-            }
-        }
+let renderCommandResponse (result: Result<string, string>) =
+    match result with
+    | Ok output when output.StartsWith("[{") -> renderProjects output
+    | Ok output when output.Contains("categories") -> renderSkills output
+    | Ok output when output = "CLEAR_TERMINAL" ->
+        div (id = "terminal-output", class' = "terminal-output", hxSwapOob = "innerHTML") { "" }
+    | Ok output when output.StartsWith("{") && output.Contains("\"header\"") -> renderAbout output
+    | Ok output when output.Contains("  help") || output.Contains("  about") -> renderHelp output
+    | Ok output when output.Contains("Email:") && output.Contains("GitHub:") -> renderContact output
     | Ok output -> div (class' = "command-output") { pre (class' = "output-content") { output } }
     | Error error -> div (class' = "terminal-line error") { error }
