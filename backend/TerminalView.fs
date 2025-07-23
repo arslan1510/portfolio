@@ -402,20 +402,60 @@ let renderFastFetch (output: string) =
             pre (class' = "output-content") { fastFetchAsciiArt }
         }
 
+let renderBlogs (output: string) =
+    try
+        let blogData = System.Text.Json.JsonSerializer.Deserialize<Blog[]>(output)
+
+        match blogData with
+        | null -> div (class' = "command-output") { "" }
+        | data when data.Length = 0 -> div (class' = "command-output") { "" }
+        | data ->
+            div (class' = "command-output") {
+                for blog in data do
+                    let fileName = blog.title.Replace(" ", "_").ToLower() + ".txt"
+                    div (class' = "terminal-line") { span (style = Styles.gruvboxBright "blue") { fileName } }
+            }
+    with _ ->
+        div (class' = "command-output") { "" }
+
+let renderBlog (output: string) =
+    try
+        let blogData = System.Text.Json.JsonSerializer.Deserialize<Blog>(output)
+
+        match blogData with
+        | null -> div (class' = "command-output") { pre (class' = "output-content") { output } }
+        | data ->
+            div (class' = "command-output") {
+                div (class' = "terminal-line", style = Styles.gruvboxBright "yellow" + Styles.fontWeight "bold") {
+                    data.title
+                }
+
+                div (class' = "terminal-line", style = Styles.gruvboxColor "fg3" + Styles.marginTop "0.5rem") {
+                    $"Date: {data.date}"
+                }
+
+                div (class' = "terminal-line", style = Styles.marginTop "1rem") {
+                    pre (class' = "output-content") { data.content }
+                }
+            }
+    with _ ->
+        div (class' = "command-output") { pre (class' = "output-content") { output } }
+
+let private isJsonArray (output: string) = output.StartsWith("[")
+let private isJsonObject (output: string) = output.StartsWith("{")
+let private containsAll (patterns: string list) (output: string) = patterns |> List.forall output.Contains
+
 let renderCommandResponse (result: Result<string, string>) =
     match result with
-    | Ok output when output.StartsWith("[{") -> renderProjects output
-    | Ok output when output.Contains("categories") -> renderSkills output
-    | Ok output when output = "CLEAR_TERMINAL" ->
-        div (id = "terminal-output", class' = "terminal-output", hxSwapOob = "innerHTML") { "" }
-    | Ok output when
-        output.StartsWith("{")
-        && output.Contains("\"header\"")
-        && output.Contains("\"items\"")
-        ->
-        renderFastFetch output
-    | Ok output when output.StartsWith("{") && output.Contains("\"header\"") -> renderAbout output
-    | Ok output when output.Contains("  help") || output.Contains("  about") -> renderHelp output
-    | Ok output when output.Contains("Email:") && output.Contains("GitHub:") -> renderContact output
-    | Ok output -> div (class' = "command-output") { pre (class' = "output-content") { output } }
     | Error error -> div (class' = "terminal-line error") { error }
+    | Ok "[]" -> div (class' = "command-output") { "" }
+    | Ok "CLEAR_TERMINAL" -> div (id = "terminal-output", class' = "terminal-output", hxSwapOob = "innerHTML") { "" }
+    | Ok output when isJsonArray output && containsAll [ "title"; "content" ] output -> renderBlogs output
+    | Ok output when isJsonObject output && containsAll [ "title"; "content" ] output -> renderBlog output
+    | Ok output when isJsonArray output -> renderProjects output
+    | Ok output when containsAll [ "categories" ] output -> renderSkills output
+    | Ok output when containsAll [ "header"; "items" ] output -> renderFastFetch output
+    | Ok output when containsAll [ "header" ] output -> renderAbout output
+    | Ok output when containsAll [ "help"; "about" ] output || containsAll [ "  help" ] output -> renderHelp output
+    | Ok output when containsAll [ "Email:"; "GitHub:" ] output -> renderContact output
+    | Ok output -> div (class' = "command-output") { pre (class' = "output-content") { output } }

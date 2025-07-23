@@ -9,6 +9,8 @@
     "whoami": "Display current user",
     "pwd": "Print working directory",
     "date": "Display current date and time",
-    "fastfetch": "Display system information"
+    "fastfetch": "Display system information",
+    "ls": "List directory contents",
+    "cat": "Display file contents (e.g., cat blog_1.txt)"
   }
 } 

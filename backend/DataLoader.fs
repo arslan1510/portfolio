@@ -66,6 +66,28 @@ let loadContactInfo () =
 let loadSkills () =
     loadSkillsDataMemoized "data/skills.json"
 
+let loadBlogsData () =
+    try
+        Directory.GetFiles("data/blogs", "*.json")
+        |> Array.map readJsonFile<Blog>
+        |> System.Text.Json.JsonSerializer.Serialize
+    with _ ->
+        System.Text.Json.JsonSerializer.Serialize([||]: Blog[])
+
+let loadBlogByTitle (title: string) =
+    try
+        let searchTitle = title.Replace(".txt", "").ToLower()
+
+        Directory.GetFiles("data/blogs", "*.json")
+        |> Array.map readJsonFile<Blog>
+        |> Array.tryFind (fun blog ->
+            blog.title.Replace(" ", "_").ToLower() = searchTitle
+            || blog.title.ToLower() = searchTitle)
+        |> function
+            | Some blog -> Ok(System.Text.Json.JsonSerializer.Serialize(blog))
+            | None -> Error($"Blog not found: {title}")
+    with ex ->
+        Error($"Error loading blog: {ex.Message}")
 
 let loadFastFetchData () =
     let data = fastFetchDataMemoized "data/fastfetch.json"

@@ -62,3 +62,8 @@ type SkillsData = { categories: CategoryItem[] }
 type TextData = { text: string }
 
 type HelpData = { commands: Map<string, string> }
+
+type Blog =
+    { title: string
+      content: string
+      date: string }

@@ -29,5 +29,12 @@ let executeCommand (command: string) (args: string[]) =
         | "echo" -> return Ok(String.Join(" ", args))
         | "clear" -> return Ok "CLEAR_TERMINAL"
         | "fastfetch" -> return Ok(loadFastFetchData ())
+        | "ls" -> return Ok(loadBlogsData ())
+        | "cat" ->
+            if args.Length = 0 then
+                return Error "Usage: cat <filename>"
+            else
+                let filename = args.[0]
+                return loadBlogByTitle filename
         | cmd -> return Error $"Command not found: {cmd}. Type 'help' for available commands."
     }
