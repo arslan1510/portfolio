@@ -4,7 +4,7 @@ A terminal-style portfolio website built with F# and Oxpecker.
 
 ## Live Demo
 
-**[Visit Portfolio](https://arslan1510.up.railway.app/)**
+Deployed on Koyeb. Replace with your live URL once deployed.
 
 ## Features
 
@@ -16,4 +16,4 @@ A terminal-style portfolio website built with F# and Oxpecker.
 ## Tech Stack
 
 - **Backend & Frontend**: F# with Oxpecker
-- **Deployment**: Railway
+- **Deployment**: Koyeb (Docker)

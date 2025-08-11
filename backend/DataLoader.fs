@@ -83,7 +83,8 @@ let loadBlogByTitle (title: string) =
         |> Array.tryFind (fun blog ->
             blog.title.Replace(" ", "_").ToLower() = searchTitle
             || blog.title.ToLower() = searchTitle)
-        |> function
+        |> fun result ->
+            match result with
             | Some blog -> Ok(System.Text.Json.JsonSerializer.Serialize(blog))
             | None -> Error($"Blog not found: {title}")
     with ex ->

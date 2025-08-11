@@ -20,7 +20,6 @@ backend/
 │   ├── help.json       # Help text
 │   └── skills.json     # Technical skills
 ├── Dockerfile          # Container configuration
-└── railway.json        # Railway deployment config
 ```
 
 ## Architecture
@@ -104,7 +103,7 @@ dotnet test
 
 ### Deployment
 
-The application is configured for Railway deployment with Docker.
+Deploy directly to Koyeb using the `Dockerfile` in the `backend/` directory. The app listens on port `8080` and serves the `frontend/` folder as static files.
 
 ## Configuration
 
